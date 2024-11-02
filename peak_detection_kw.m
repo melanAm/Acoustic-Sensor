@@ -2,10 +2,6 @@ close all;
 clear all; 
 clc;
 
-addpath('E:\Dr. Anooshahpour project\sounds\Kettle Whistle\anechoic\Day10')
-addpath('E:\Dr. Anooshahpour project\sounds\Kettle Whistle\reverb\Day12')
-addpath('E:\Dr. Anooshahpour project\Matlab\utility codes')
-
 [x, fs] = audioread('fanPosition8_KwhF.wav');
 t1=8;t2=20;
 x = x(t1*fs:t2*fs);
@@ -46,8 +42,6 @@ end
 
 % Sort peaks in descending order and get the three highest  
  
-
-
 function [iploc,ipmag] = peakInterp(mX,ploc)
     val = mX(ploc);
     lval = mX(ploc-1);

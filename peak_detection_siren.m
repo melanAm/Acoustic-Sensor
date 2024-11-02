@@ -2,9 +2,6 @@ close all;
 clear all; 
 clc;
 
-addpath('E:\Dr. Anooshahpour project\sounds\Siren\anechoic\Day5_d_10cm')
-addpath('E:\Dr. Anooshahpour project\Matlab\utility codes')
-addpath('E:\Dr. Anooshahpour project\sounds\Siren\reverb\Day11')
 
 [x, fs] = audioread('fanPosition8.wav');
 x = mean(x,2);

@@ -2,9 +2,6 @@ close all;
 clear; 
 clc;
 
-addpath('E:\Acoustic Sensor\Acoustic Sensor\sounds\Siren\anechoic\Day5_d_10cm')
-addpath('E:\Acoustic Sensor\Acoustic Sensor\Matlab\utility')
-addpath('E:\Acoustic Sensor\Acoustic Sensor\Matlab\f0 detection')
 
 % STFT parameters 
 M = 14400;  %300ms

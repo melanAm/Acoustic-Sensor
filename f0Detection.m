@@ -1,14 +1,8 @@
 
-function [mX,ipfreq,ipmag,f,f0] = f0Detection(x,fs,win,H,N,fp)
-    minf0 = 100;
-    maxf0 = 1000;
-    f0et = 20;
-    f = (fs*(0:N/2-1)/N)';
-    [xmX_dB,xpX] = stftMag_dB(x,win,N,H);
-    mX = mean(xmX_dB,2);
-    mX = mX';
+function [ipfreq,ipmag,f0] = f0Detection(mX,fs,minf0,maxf0,f0et)
     [~,ploc] = findpeaks(mX,'MinPeakHeight',-50,'MinPeakProminence',7,'NPeaks',10);
     [iploc,ipmag] = peakInterp(mX,ploc);
+    N = length(mX)*2;
     ipfreq = (fs*(iploc-1)/N);
     f0 = f0Twm(ipfreq,ipmag,f0et,minf0,maxf0);
 end
@@ -21,7 +15,6 @@ function f0 = f0Twm(pfreq,pmag,ef0max,minf0,maxf0)
         return
     end
     [f0,f0error] = twm(pfreq,pmag,f0cf);
-    
     if (f0>0 && f0error<ef0max)
        return 
     else 
@@ -29,7 +22,6 @@ function f0 = f0Twm(pfreq,pmag,ef0max,minf0,maxf0)
         return
     end
 end
-
 
 function [f0,f0error] = twm(pfreq,pmag,f0cf)
     %f0cf & pfreq & pmag are row vectors

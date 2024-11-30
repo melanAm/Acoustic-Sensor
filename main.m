@@ -2,6 +2,9 @@ close all;
 clear; 
 clc;
 
+addpath('E:\Acoustic Sensor\Acoustic Sensor\sounds\Siren\anechoic\Day5_d_10cm')
+addpath('E:\Acoustic Sensor\Acoustic Sensor\Matlab\utility')
+addpath('E:\Acoustic Sensor\Acoustic Sensor\Matlab\f0 detection')
 
 % STFT parameters 
 M = 14400;  %300ms
@@ -9,6 +12,10 @@ H = M/2;
 N = 16384;
 win = blackman(M);
 
+%fundamental frequency detection parameters
+minf0 = 100;
+maxf0 = 1000;
+f0et = 20;
 fundamental_freqs = zeros(1,6);
 plts = [];
 
@@ -20,7 +27,11 @@ for i=3:8
     end
     %last 3 seconds
     x = x(end:-1:end-3*fs);
-    [mX,ipfreq,ipmag,f,f0] = f0Detection(x,fs,win,H,N,i);
+    [xmX, f] = stftMag(x,fs,win,N,H);
+    mX = mean(xmX,2);
+    mX = 20*log10(mX);
+    mX = mX';
+    [ipfreq,ipmag,f0] = f0Detection(mX,fs,minf0,maxf0,f0et);
     fundamental_freqs(i-2) = f0;
     figure(1)
     plt = semilogx(f,mX','DisplayName', sprintf('fan position %i',i))

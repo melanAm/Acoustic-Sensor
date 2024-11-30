@@ -1,5 +1,5 @@
 
-function [xmX,xpX] = stftMag_dB(x,win,N,H)
+function [xmX,f] = stftMag(x,fs,win,N,H)
     M = length(win);
     hN = (N/2);
     hM1 = floor((M+1)/2);
@@ -18,13 +18,13 @@ function [xmX,xpX] = stftMag_dB(x,win,N,H)
         mX = abs(X);
         mX = mX/max(mX);
         mX = mX(N/2+1:end);
-        mX = 20*log10(mX);
         xmX(:,t) = mX;
         pX = unwrap(angle(X));
         xpX(:,t) = pX(N/2+1:end);
         t = t+1;
         pin = pin+H;
     end
+    f = (fs*(0:N/2-1)/N)';
 end
 
 
